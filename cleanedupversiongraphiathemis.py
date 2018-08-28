@@ -22,10 +22,9 @@ PC = ccrs.PlateCarree()
 ST = ccrs.Stereographic()
 MR = ccrs.Mercator()
     
-def themisasi(dat, ax): #function used to save plots 
+def themisasi(dat, ax): 
         
     imgs = dat['imgs'].isel(time=800)
-    #gets rid of the negative values and replaces them with nans
     el = dat['el'].values
     el.setflags(write=True)
     bad = el < 15 
@@ -47,7 +46,7 @@ def themisasi(dat, ax): #function used to save plots
     
         if good.size == 0:
             continue
-        elif top is None:#only focusing on non n
+        elif top is None:
             top = i
     
         lat[i, good[-1]:] = lat[i, good[-1]]
@@ -64,8 +63,7 @@ def themisasi(dat, ax): #function used to save plots
     lon[:top, :] = lon[top, firstnan]
     
     ax.pcolormesh(lon[:firstnan, :], lat[:firstnan, :], imgs[:firstnan, :], transform=PC)
-     #filename
-#     
+    
 caldir = Path("c:\code") / 'themisasi' / 'asf_folder_with_calibration'
 datadir = Path('C:\code') / 'themisasi' / 'testfolderforgraphicalthemis'
 
@@ -77,22 +75,15 @@ p=p.parse_args()
     
 t = parse(p.time)
 datas=[]
-# thefile1=ta.download('2012-03-12T12','fykn','/code/themisasi/testfolderforgraphicalthemis' )
-# thefile2=ta.download('2012-03-12T08','gako','/code/themisasi/testfolderforgraphicalthemis' )
 f=plt.figure()
 ax=f.gca(projection=MR)
 ax.set_extent((-180, -120, 50, 75))
 ax.gridlines()
 ax.coastlines()
     
-for site in p.sites:#loading the sites which return xarrays
+for site in p.sites:
     datafn = datadir / f'thg_l1_asf_{site}_{t.year:4d}{t.month:02d}{t.day:02d}{t.hour:02d}_v01.cdf'
     califn = sorted(caldir.glob(f'themis_skymap_{site}_200*.sav'))[0]
     loadit=tio.load(fn=datafn,calfn=califn)
-#    datas.append(loadit)  
-#for i in datas:
-    themisasi(loadit, ax)
-#pathofplots='C:/code/themisasi/alltheplotsforgraphicthemis'
-#for i in range(pathofplots.glob()):#save as png
-#    fig.savefig('plot{i}.png')  
-plt.savefig('C:/code/themisasi/alltheplotsforgraphicthemis')#change the format to png needc to include site name and time 
+    themisasi(loadit, ax) 
+plt.savefig('C:/code/themisasi/alltheplotsforgraphicthemis')
