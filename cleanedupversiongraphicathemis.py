@@ -56,13 +56,10 @@ def themisasi(dat, ax):
         lon[i, :good[0]] = lon[i, good[0]]
     
     
-    lat[:top, :] = np.nanmax(lat[top, :])
-    lon[:top, :] = np.nanmax(lon[top, :])
-    firstnan=np.nonzero(np.isnan(lat).any(axis=1))[0][0]
-    lat[:top, :] = lat[top, firstnan]
-    lon[:top, :] = lon[top, firstnan]
+    firstnan=np.nonzero(mask.any(axis=1))[0]
     
-    ax.pcolormesh(lon[:firstnan, :], lat[:firstnan, :], imgs[:firstnan, :], transform=PC)
+    ax.pcolormesh(lon[firstnan[0]:firstnan[-1], :], lat[firstnan[0]:firstnan[-1], :], 
+              imgs[firstnan[0]:firstnan[-1], :], transform=PC)
     
 caldir = Path("c:\code") / 'themisasi' / 'asf_folder_with_calibration'
 datadir = Path('C:\code') / 'themisasi' / 'testfolderforgraphicalthemis'
