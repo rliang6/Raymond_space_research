@@ -83,4 +83,7 @@ for site in p.sites:
     califn = sorted(caldir.glob(f'themis_skymap_{site}_200*.sav'))[0]
     loadit=tio.load(fn=datafn,calfn=califn)
     themisasi(loadit, ax) 
-plt.savefig('C:/code/themisasi/alltheplotsforgraphicthemis')
+#to save as png you may edit the path to your own preference to save as well as the image title and format
+#plt.savefig('C:/code/themisasi/alltheplotsforgraphicthemis/plot.png')
+#or by default just to the plot use the following command
+plt.show()
