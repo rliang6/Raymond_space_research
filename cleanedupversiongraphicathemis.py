@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 """
+Created on Fri Sep 21 14:13:06 2018
+
+@author: Raymond
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Tue Aug 21 16:01:51 2018
-
 @author: Raymond Liang
-
 """
 from dateutil.parser import parse
 from pathlib import Path
@@ -32,7 +37,7 @@ def datetimerange(start: datetime, stop: datetime, step: timedelta) -> List[date
     return [start + i*step for i in range((stop-start) // step)]
 def themisasi(dat, ax): #function used to save plots 
         
-    imgs = dat['imgs'].isel(time=800)
+    imgs = dat['imgs'].squeeze()
     #gets rid of the negative values and replaces them with nans
     el = dat['el'].values
     el.setflags(write=True)
@@ -79,25 +84,28 @@ p.add_argument('sites', nargs='+', help='names of sites')
 p.add_argument('-t','--time', nargs='+', required=True)
 p.add_argument('-i', '--interval', help='time interval (seconds)', type=float, default=1.)
 p=p.parse_args()  
-# prg.py gako fykn -t 2013-05-01T12 2013-05-01T13 -i 1
 datas=[]
 sites=p.sites
 start=parse(p.time[0])
 stop=parse(p.time[1])
-#you may change the time units for what you want
 timedelta=timedelta(seconds = p.interval)
 rangedate=datetimerange(start,stop,timedelta)
-# thefile1=ta.download('2012-03-12T12','fykn','/code/themisasi/testfolderforgraphicalthemis' )
-# thefile2=ta.download('2012-03-12T08','gako','/code/themisasi/testfolderforgraphicalthemis' )
+for site in sites:
+    ta.download('2008-03-26T07', site , 'C:\code\data')
 f=plt.figure()
 ax=f.gca(projection=MR)
-ax.set_extent((-180, -120, 50, 75))
+ax.set_extent((-180,-35,25,75))
 ax.gridlines()
 ax.coastlines()
+datadir='C:\code\data'
 for t in rangedate:
     for site in sites:#loading the sites which return xarrays
-        datafn = datadir / f'thg_l1_asf_{site}_{t.year:4d}{t.month:02d}{t.day:02d}{t.hour:02d}_v01.cdf'
-        califn = sorted(caldir.glob(f'themis_skymap_{site}_200*.sav'))[0]
-        loadit=tio.load(fn=datafn,calfn=califn)
+        try:
+            loadit=tio.load(datadir,site,'2008-03-26T07')
+        except ValueError:
+            continue
+        except FileNotFoundError:
+            continue
+        
         themisasi(loadit, ax) 
-    plt.savefig('C:/code/themisasi/alltheplotsforgraphicthemis/multiplethemis%s%s%s.png' %(t.hour,t.minute,t.second))
+    plt.savefig('C:/alltheplotsforgraphicthemis/multiplethemis%s%s%s.png' %(t.hour,t.minute,t.second))
