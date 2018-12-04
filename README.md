@@ -1,5 +1,5 @@
 # Raymond_space_research
-my code for research for plotting out grpahs and visualisations
+my code for research for plotting out graphs and visualisations
 
 Depending on what you input for your time and camera parameters it will output a png file with different projections of the cdf images.
 
