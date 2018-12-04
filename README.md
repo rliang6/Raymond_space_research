@@ -6,3 +6,6 @@ Depending on what you input for your time and camera parameters it will output a
 
 ![multiplethemis1000](https://user-images.githubusercontent.com/37962913/49465843-84e83680-f7cc-11e8-9365-0db91702124a.png)
 
+
+
+Worked along side Professor Michael Hirsch and Professor Joshua Semeter to produce the graphical visualisations of the projections 
