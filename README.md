@@ -2,7 +2,7 @@
 My code for research for plotting out graphs and visualisations.
 
 Depending on what you input for your time and camera parameters it will output a png file with different projections of the cdf images.
-The fish eye cameras are located in places all over North America and they took images in cdf form that were then uploaded to the following website:http://themis.ssl.berkeley.edu/data/themis/thg/ .
+The fish eye cameras are located in places all over North America and they took images in cdf form that were then uploaded to the following website: http://themis.ssl.berkeley.edu/data/themis/thg/ .
 
 1. The first step was to acquire the cdf image and plot it out as the raw format.
 2. There was then the step of manipulating the raw format of the data so that there would be a change in the coordinate system. This step is essential in order to relate the data from the instruments to a common coordinate system.
